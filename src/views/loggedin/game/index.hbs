@@ -1,0 +1,180 @@
+<section class="games-page">
+
+    <!-- Encabezado -->
+    <header class="games-header">
+        <div>
+            <span class="games-eyebrow">BÉISBOL ENTRE AMIGOS</span>
+            <h1 class="games-title">Partidos</h1>
+            <p class="games-description">Consulta los resultados y organiza el próximo encuentro.</p>
+        </div>
+
+        <button type="button" class="games-button games-button-primary" id="btnNewGame" data-bs-toggle="modal" data-bs-target="#createGameModal">
+            <i class="bi bi-plus-lg" aria-hidden="true"></i>
+            Nuevo partido
+        </button>
+    </header>
+
+    <!-- Filtros -->
+    <form class="games-filters" id="gamesFilterForm">
+        <div class="games-field">
+            <label for="gameDateFrom">Fecha inicial</label>
+            <input type="date" id="gameDateFrom" name="dateFrom">
+        </div>
+
+        <div class="games-field">
+            <label for="gameDateTo">Fecha final</label>
+            <input type="date" id="gameDateTo" name="dateTo">
+        </div>
+
+        <div class="games-field games-field-search">
+            <label for="gameStarBatter">Bateador estrella</label>
+            <div class="games-search">
+                <i class="bi bi-search" aria-hidden="true"></i>
+                <input type="search" id="gameStarBatter" name="starBatter" placeholder="Buscar por nombre..." autocomplete="off">
+            </div>
+        </div>
+
+        <div class="games-filter-actions">
+            <button type="submit" class="games-button games-button-blue">
+                <i class="bi bi-funnel" aria-hidden="true"></i>
+                Filtrar
+            </button>
+
+            <button type="reset" class="games-button games-button-outline" id="btnClearGameFilters">
+                Limpiar
+            </button>
+        </div>
+    </form>
+
+    <!-- Listado -->
+    <div class="games-panel">
+        <div class="games-panel-header">
+            <h2>Historial de partidos</h2>
+            <span class="games-counter" id="gamesCount">3 partidos</span>
+        </div>
+
+        <div class="games-table-scroll" role="region" aria-label="Historial de partidos" tabindex="0">
+            <table class="games-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Bateador estrella</th>
+                        <th scope="col">Posición</th>
+                        <th scope="col" class="games-text-center">Puntos</th>
+                        <th scope="col" class="games-text-end">Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody id="gamesContainer">
+                
+
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Mostrar cuando no haya resultados -->
+        <div class="games-empty" id="gamesEmptyState" hidden>
+            <i class="bi bi-calendar-x" aria-hidden="true"></i>
+            <h3>No encontramos partidos</h3>
+            <p>Prueba con otras fechas o con otro nombre de bateador.</p>
+        </div>
+    </div>
+
+</section>
+
+
+
+<div class="modal fade player-modal game-create-modal" id="createGameModal" tabindex="-1" aria-labelledby="createGameModalLabel" aria-describedby="createGameModalDescription" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <!-- Encabezado -->
+            <div class="modal-header">
+                <div class="player-modal-heading">
+                    <div class="player-modal-icon" aria-hidden="true">
+                        <i class="bi bi-play-circle"></i>
+                    </div>
+
+                    <div>
+                        <h2 class="modal-title" id="createGameModalLabel">Nuevo partido</h2>
+                        <p id="createGameModalDescription">Selecciona los jugadores que participarán.</p>
+                    </div>
+                </div>
+
+                <button type="button" class="player-modal-close" data-bs-dismiss="modal" aria-label="Cerrar formulario">
+                    <i class="bi bi-x-lg" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <!-- Selección de jugadores -->
+            <div class="modal-body">
+                <form id="createGameForm">
+
+                    <div class="games-field">
+                        <label for="gamePlayerSearch">Buscar jugador</label>
+                        <div class="games-search">
+                            <i class="bi bi-search" aria-hidden="true"></i>
+                            <input type="search" id="gamePlayerSearch" placeholder="Escribe el nombre..." autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="game-selection-toolbar">
+                        <div class="game-selection-buttons">
+                            <button type="button" class="games-button games-button-outline" id="btnSelectAllGamePlayers">
+                                <i class="bi bi-check2-all" aria-hidden="true"></i>
+                                Seleccionar todos
+                            </button>
+
+                            <button type="button" class="games-button games-button-outline" id="btnDeselectAllGamePlayers">
+                                Deseleccionar todos
+                            </button>
+                        </div>
+
+                        <span class="games-counter" id="gameSelectedCount" role="status">0 seleccionados</span>
+                    </div>
+
+                    <p class="game-selection-help" id="gameSelectionHelp">
+                        Marca la casilla de cada jugador que participará en este partido.
+                    </p>
+
+                    <div class="games-table-scroll game-players-table-wrap" role="region" aria-label="Jugadores disponibles" tabindex="0">
+                        <table class="games-table game-players-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="game-checkbox-column">Juega</th>
+                                    <th scope="col">Jugador</th>
+                                    <th scope="col">Posición</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="gamePlayersContainer">
+                                <!-- Sustituye estos ejemplos por todos tus jugadores -->
+                                
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="games-empty" id="gamePlayersEmptyState" hidden>
+                        <i class="bi bi-search" aria-hidden="true"></i>
+                        <p>No encontramos jugadores con ese nombre.</p>
+                    </div>
+
+                    <div class="player-form-error" id="createGameError" role="alert" hidden></div>
+                </form>
+            </div>
+
+            <!-- Acciones -->
+            <div class="modal-footer">
+                <button type="button" class="player-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
+
+                <button type="button" class="player-modal-save" id="btnStartGame">
+                    <i class="bi bi-play-fill" aria-hidden="true"></i>
+                    <span>Iniciar partido</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="/js/toggedin/game/game.js" type="module"></script>

@@ -1,0 +1,168 @@
+<section class="live-game">
+
+    <!-- Encabezado -->
+<header class="live-header">
+    <div>
+        <span class="live-eyebrow">BÉISBOL ENTRE AMIGOS</span>
+        <h1>El diamante está listo.</h1>
+        <p>Registra cada turno y sigue el rendimiento de los jugadores.</p>
+    </div>
+
+    <div class="live-header-actions">
+        <span class="live-game-badge">
+            <span aria-hidden="true"></span>
+            PARTIDO EN CURSO
+        </span>
+
+        <button type="button" class="live-finish-button" id="btnFinishGame">
+            <i class="bi bi-flag-fill" aria-hidden="true"></i>
+            Finalizar partido
+        </button>
+    </div>
+</header>
+
+    <!-- Franja deportiva -->
+    <div class="live-banner">
+        <div>
+            <span class="live-banner-label">CADA TURNO CUENTA</span>
+            <h2>El próximo gran batazo empieza aquí.</h2>
+        </div>
+
+        <i class="bi bi-lightning-charge-fill" aria-hidden="true"></i>
+    </div>
+
+    <!-- Marcador -->
+    <section class="live-panel" aria-labelledby="liveTableTitle">
+        <div class="live-panel-heading">
+            <div>
+                <h2 id="liveTableTitle">Marcador del partido</h2>
+                <p>Estadísticas individuales de los participantes.</p>
+            </div>
+
+            <span class="live-table-hint">
+                <i class="bi bi-plus-circle" aria-hidden="true"></i>
+                Registra un nuevo turno
+            </span>
+        </div>
+
+        <div class="live-table-scroll" role="region" aria-label="Marcador de jugadores" tabindex="0">
+            <table class="live-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Jugador</th>
+                        <th scope="col">Posición</th>
+                        <th scope="col">Turnos al bate</th>
+                        <th scope="col">Hits</th>
+                        <th scope="col">Jonrón</th>
+                        <th scope="col">Puntos</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody id="livePlayersContainer">
+                   
+                </tbody>
+            </table> 
+        </div>
+    </section>
+
+</section>
+
+
+
+<!-- Modal para agregar un turno -->
+
+<div class="modal fade player-modal score-modal" id="addScoreModal" tabindex="-1" aria-labelledby="addScoreModalLabel" aria-describedby="addScoreModalDescription" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <div class="player-modal-heading">
+                    <div class="player-modal-icon" aria-hidden="true">
+                        <i class="bi bi-plus-circle"></i>
+                    </div>
+
+                    <div>
+                        <h2 class="modal-title" id="addScoreModalLabel">Agregar al Marcador</h2>
+                        <p id="addScoreModalDescription">Registra el resultado de este turno.</p>
+                    </div>
+                </div>
+
+                <button type="button" class="player-modal-close" data-bs-dismiss="modal" aria-label="Cerrar formulario">
+                    <i class="bi bi-x-lg" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="addScoreForm">
+                    <input type="hidden" id="scorePlayerId" name="playerId">
+                    <input type="hidden" id="gameId" name="gameId">
+
+                    <div class="score-player-summary">
+                        <span>JUGADOR</span>
+                        <strong id="scorePlayerName">Selecciona un jugador</strong>
+                    </div>
+
+                    <!-- Siempre seleccionado -->
+                    <label class="score-option score-option-fixed" for="scoreTurn">
+                        <span class="score-option-icon" aria-hidden="true">
+                            <i class="bi bi-arrow-repeat"></i>
+                        </span>
+
+                        <span class="score-option-copy">
+                            <strong>Turno</strong>
+                            <small>Se agrega un turno al bate.</small>
+                        </span>
+
+                        <input type="checkbox" id="scoreTurn" checked disabled>
+                    </label>
+
+                    <fieldset class="score-results">
+                        <legend>Resultado del turno</legend>
+                        <p class="score-help" id="scoreResultHelp">Marca Hit o Jonrón. También puedes dejar ambos sin marcar.</p>
+
+                        <label class="score-option" for="scoreHit">
+                            <span class="score-option-icon" aria-hidden="true">
+                                <i class="bi bi-bullseye"></i>
+                            </span>
+
+                            <span class="score-option-copy">
+                                <strong>Hit</strong>
+                                <small>Registrar un hit en este turno.</small>
+                            </span>
+
+                            <input type="checkbox" id="scoreHit" name="hit" aria-describedby="scoreResultHelp">
+                        </label>
+
+                        <label class="score-option" for="scoreHomeRun">
+                            <span class="score-option-icon score-option-icon-gold" aria-hidden="true">
+                                <i class="bi bi-rocket-takeoff"></i>
+                            </span>
+
+                            <span class="score-option-copy">
+                                <strong>Jonrón</strong>
+                                <small>Registrar un jonrón en este turno.</small>
+                            </span>
+
+                            <input type="checkbox" id="scoreHomeRun" name="homeRun" aria-describedby="scoreResultHelp">
+                        </label>
+                    </fieldset>
+
+                    <div class="player-form-error" id="addScoreError" role="alert" hidden></div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="player-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
+
+                <button type="submit" form="addScoreForm" class="player-modal-save" id="btnSaveScore">
+                    <i class="bi bi-check2" aria-hidden="true"></i>
+                    <span>Guardar</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="/js/toggedin/Puntuation/puntuation.js" type="module"></script>

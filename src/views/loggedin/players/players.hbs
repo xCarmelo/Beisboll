@@ -1,0 +1,229 @@
+<section class="roster-page">
+
+    <!-- Encabezado -->
+    <header class="roster-header">
+        <div>
+            <span class="roster-eyebrow">BÉISBOL ENTRE AMIGOS</span>
+            <h1 class="roster-title">Jugadores</h1>
+            <p class="roster-description">
+                Administra tus jugadores y registra sus puntuaciones.
+            </p>
+        </div>
+
+       <button
+            type="button"
+            class="roster-add"
+            id="btnNewPlayer"
+            data-bs-toggle="modal"
+            data-bs-target="#createPlayerModal"
+        >
+            <i class="bi bi-plus-lg" aria-hidden="true"></i>
+            Nuevo jugador
+        </button>
+    </header>
+
+    <!-- Buscador -->
+    <div class="roster-toolbar">
+        <div class="roster-search">
+            <i class="bi bi-search" aria-hidden="true"></i>
+
+            <label for="searchPlayer" class="roster-sr-only">
+                Buscar jugador
+            </label>
+
+            <input
+                type="search"
+                id="searchPlayer"
+                name="search"
+                placeholder="Buscar jugador..."
+                autocomplete="off"
+            >
+        </div>
+
+        <span class="roster-count">4 jugadores</span>
+    </div>
+
+    <!-- Cuadrícula de tarjetas -->
+    <div class="roster-grid" id="playersContainer">
+
+
+
+    </div>
+</section>
+
+
+
+
+<div class="modal fade player-modal" id="createPlayerModal" tabindex="-1" aria-labelledby="createPlayerModalLabel" aria-describedby="createPlayerModalDescription" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <!-- Encabezado -->
+            <div class="modal-header">
+                <div class="player-modal-heading">
+                    <div class="player-modal-icon" aria-hidden="true">
+                        <i class="bi bi-person-plus"></i>
+                    </div>
+
+                    <div>
+                        <h2 class="modal-title" id="createPlayerModalLabel">Nuevo jugador</h2>
+                        <p id="createPlayerModalDescription">Agrega un integrante al diamante.</p>
+                    </div>
+                </div>
+
+                <button type="button" class="player-modal-close" data-bs-dismiss="modal" aria-label="Cerrar formulario">
+                    <i class="bi bi-x-lg" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <!-- Formulario -->
+            <div class="modal-body">
+                <form id="form">
+                    <p class="player-modal-note">
+                        Los campos con <span aria-hidden="true">*</span> son obligatorios.
+                    </p>
+
+                    <div class="player-field">
+                        <label for="playerName">
+                            Nombre del jugador <span class="player-required" aria-hidden="true">*</span>
+                        </label>
+
+                        <div class="player-input-wrap">
+                            <i class="bi bi-person" aria-hidden="true"></i>
+                            <input type="text" id="playerName" name="name" placeholder="Ej. Carlos Mendoza" autocomplete="name" required>
+                        </div>
+                    </div>
+
+                    <div class="player-field">
+                        <label for="playerPosition">
+                            Posición <span class="player-field-optional">Opcional</span>
+                        </label>
+
+                        <div class="player-input-wrap">
+                            <i class="bi bi-diamond" aria-hidden="true"></i>
+                            <select id="playerPosition" name="position" aria-describedby="playerPositionHelp">
+                                <option value="">Sin posición asignada</option>
+                                <option value="Lanzador">Lanzador</option>
+                                <option value="Receptor">Receptor</option>
+                                <option value="Primera base">Primera base</option>
+                                <option value="Segunda base">Segunda base</option>
+                                <option value="Tercera base">Tercera base</option>
+                                <option value="Campo corto">Campo corto</option>
+                                <option value="Jardinero izquierdo">Jardinero izquierdo</option>
+                                <option value="Jardinero central">Jardinero central</option>
+                                <option value="Jardinero derecho">Jardinero derecho</option>
+                                <option value="Bateador designado">Bateador designado</option>
+                            </select>
+                        </div>
+
+                        <p class="player-field-help" id="playerPositionHelp">Puedes asignar o cambiar su posición después.</p>
+                    </div>
+
+                    <div class="player-form-error" id="createPlayerError" role="alert" hidden></div>
+                </form>
+            </div>
+
+            <!-- Acciones -->
+            <div class="modal-footer">
+                <button type="button" class="player-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
+
+                <button type="submit" form="form" class="player-modal-save" id="btnSavePlayer">
+                    <i class="bi bi-plus-lg" aria-hidden="true"></i>
+                    <span>Agregar jugador</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- modal para actualizar -->
+
+<div class="modal fade player-modal" id="editPlayerModal" tabindex="-1" aria-labelledby="editPlayerModalLabel" aria-describedby="editPlayerModalDescription" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <!-- Encabezado -->
+            <div class="modal-header">
+                <div class="player-modal-heading">
+                    <div class="player-modal-icon" aria-hidden="true">
+                        <i class="bi bi-pencil-square"></i>
+                    </div>
+
+                    <div>
+                        <h2 class="modal-title" id="editPlayerModalLabel">Editar jugador</h2>
+                        <p id="editPlayerModalDescription">Actualiza la información del jugador.</p>
+                    </div>
+                </div>
+
+                <button type="button" class="player-modal-close" data-bs-dismiss="modal" aria-label="Cerrar formulario">
+                    <i class="bi bi-x-lg" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <!-- Formulario -->
+            <div class="modal-body">
+                <form id="editPlayerForm">
+                    <input type="hidden" id="editPlayerId" name="id">
+
+                    <p class="player-modal-note">
+                        Los campos con <span aria-hidden="true">*</span> son obligatorios.
+                    </p>
+
+                    <div class="player-field">
+                        <label for="editPlayerName">
+                            Nombre del jugador <span class="player-required" aria-hidden="true">*</span>
+                        </label>
+
+                        <div class="player-input-wrap">
+                            <i class="bi bi-person" aria-hidden="true"></i>
+                            <input type="text" id="editPlayerName" name="name" placeholder="Ej. Carlos Mendoza" autocomplete="name" required>
+                        </div>
+                    </div>
+
+                    <div class="player-field">
+                        <label for="editPlayerPosition">
+                            Posición <span class="player-field-optional">Opcional</span>
+                        </label>
+
+                        <div class="player-input-wrap">
+                            <i class="bi bi-diamond" aria-hidden="true"></i>
+                            <select id="editPlayerPosition" name="position" aria-describedby="editPlayerPositionHelp">
+                                <option value="">Sin posición asignada</option>
+                                <option value="Lanzador">Lanzador</option>
+                                <option value="Receptor">Receptor</option>
+                                <option value="Primera base">Primera base</option>
+                                <option value="Segunda base">Segunda base</option>
+                                <option value="Tercera base">Tercera base</option>
+                                <option value="Campo corto">Campo corto</option>
+                                <option value="Jardinero izquierdo">Jardinero izquierdo</option>
+                                <option value="Jardinero central">Jardinero central</option>
+                                <option value="Jardinero derecho">Jardinero derecho</option>
+                                <option value="Bateador designado">Bateador designado</option>
+                            </select>
+                        </div>
+
+                        <p class="player-field-help" id="editPlayerPositionHelp">Selecciona la posición actual del jugador.</p>
+                    </div>
+
+                    <div class="player-form-error" id="editPlayerError" role="alert" hidden></div>
+                </form>
+            </div>
+
+            <!-- Acciones -->
+            <div class="modal-footer">
+                <button type="button" class="player-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
+
+                <button type="submit" form="editPlayerForm" class="player-modal-save" id="btnUpdatePlayer">
+                    <i class="bi bi-check2" aria-hidden="true"></i>
+                    <span>Guardar cambios</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/toggedin/players/player.js" type="module"></script>
