@@ -20,8 +20,15 @@ export const controller = (router, urls)=>{
         res.render('loggedin/game/index');
     });
 
+    //estadísticas de juego
+    router.get(urls.loggedin.game.statistics, (req, res)=>{
+        res.render('loggedin/game/statistic');
+    });
+
     //puntuacion
     router.get(urls.loggedin.puntuation.view, (req, res)=>{
         res.render('loggedin/puntuation/index');
     });
+
+
 }

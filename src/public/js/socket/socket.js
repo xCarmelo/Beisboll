@@ -60,11 +60,23 @@ export const game = {
         socket.emit('client:endGame', gameId);
     },
 
+    deleteGame: (gameId)=>{
+        socket.emit('client:deleteGame', gameId);
+    },
+
     listener: (fn)=>{
         socket.off('server:endGame');
+        socket.off('server:deleteGame');
 
         socket.on('server:endGame', (v)=>{
-            fn(v);
+            if(v)
+            window.location.href = "/partidos";
+        });
+
+        socket.on('server:deleteGame', v =>{
+            if(v){
+                fn();
+            }
         });
     }
 }
@@ -73,7 +85,7 @@ export const puntuation = {
         gameOnlinePuntuation: ()=>{
             return new Promise((res)=>{
                 socket.emit('client:gameOnline');
-                socket.on('server:gameOnline', (data)=>{
+                socket.on('server:gameOnline', (data)=>{ 
                     res(data);
                 });
             });
@@ -85,19 +97,38 @@ export const puntuation = {
 
     update: (data)=>{
         socket.emit('client:puntuationUpdate', data);
-    }
-    ,
+    },
+
+    updateStatistc: (data)=>{
+        socket.emit('client:statisticUpdate', data);
+    },
+
+
+    find: (idGame)=>{
+        return new Promise(re =>{
+            socket.emit('client:puntuation', idGame);
+            socket.on('server:puntuation', data =>{
+                re(data);
+            });
+            
+        });
+    },
 
     listener: (fn)=>{
         socket.off('server:puntuationCreate');
         socket.off('server:puntuationUpdate');
+        socket.off('server:statisticUpdate');
 
         socket.on('server:puntuationCreate', (v)=>{
                 fn(v);
         });
 
         socket.on('server:puntuationUpdate', (v)=>{
-            fn(v);
+            if(v)fn();
+        });
+
+        socket.on('server:statisticUpdate', (v)=>{
+            if(v) fn();
         });
     }
 }

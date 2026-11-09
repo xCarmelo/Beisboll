@@ -92,21 +92,12 @@ if (scoreModal) {
         }
 
         puntuation.update(data);
-        puntuation.listener((value)=>{
-            if(value){
-                alert("Puntuación agregada al marcador.");
-                printPuntuation();
-                const modalElement = document.getElementById('addScoreModal');
+        const modalElement = document.getElementById('addScoreModal');
 
-                if (modalElement) {
-                    const modalInstance = bootstrap.Modal.getOrCreateInstance(modalElement);
-                    modalInstance.hide();
-                }
-            }
-            else{
-                alert("Error al actualizar la puntuación.");
-            }
-        });
+        if (modalElement) {
+            const modalInstance = bootstrap.Modal.getOrCreateInstance(modalElement);
+            modalInstance.hide();
+        }
 
     });
 }
@@ -121,16 +112,6 @@ endGame = ()=>{
 
             if(gameId){
                 game.endGame(gameId.value);
-
-                game.listener((v)=>{
-                    if(v){
-                        alert("Partido finalizado con exito.");
-                        window.location.href = "/partidos";
-                    }
-                    else{
-                        alert("No se pudo finalizar el partido.");
-                    }
-                });
             }
         }
     });
@@ -141,4 +122,6 @@ endGame = ()=>{
 addPuntuation();
 printPuntuation();
 endGame();
+puntuation.listener(printPuntuation);
+game.listener();
 

@@ -2268,3 +2268,100 @@ button:focus-visible {
         transition: none;
     }
 }
+
+
+/* ==========================
+   ESTADÍSTICAS DEL PARTIDO
+   ========================== */
+
+.stats-finished-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 40px;
+    padding: 10px 14px;
+    border: 1px solid #49617f;
+    border-radius: 999px;
+    color: #cfdef3;
+    background: #172c46;
+    font-size: 10px;
+    font-weight: 750;
+    letter-spacing: 0.7px;
+}
+
+.stats-finished-badge > i {
+    color: #ffd465;
+    font-size: 13px;
+}
+
+.stats-banner {
+    border-color: #465272;
+    background:
+        radial-gradient(circle at right, rgb(151 126 213 / 18%), transparent 60%),
+        linear-gradient(120deg, #203452, #17233c);
+}
+
+.stats-banner > i {
+    color: #bdcafa;
+}
+
+.stats-edit-button {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid #3d5679;
+    border-radius: 10px;
+    color: #c8dcfa;
+    background: #1a304e;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.stats-edit-button:hover {
+    border-color: #7898c3;
+    color: #fff;
+    background: #25466e;
+}
+
+.stats-edit-button:focus-visible {
+    outline: 3px solid #ffd465;
+    outline-offset: 3px;
+}
+
+.stats-form-note {
+    margin: 0 0 22px;
+    padding: 11px 13px;
+    border-left: 3px solid #7599cf;
+    border-radius: 0 8px 8px 0;
+    color: #b9cbe5;
+    background: rgb(117 153 207 / 8%);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .stats-edit-button {
+        transition: none;
+    }
+}
+
+.stats-modal-form {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.stats-modal-form > .modal-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+}
+
+.stats-modal-form > .modal-footer {
+    flex-shrink: 0;
+}

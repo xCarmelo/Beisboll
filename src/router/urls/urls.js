@@ -8,10 +8,10 @@ export const urls = {
         },
         game: {
             view: '/partidos',
-            statistics: '/partidos/estadisticas'
+            statistics: '/partidos/estadisticas/:id'
         },
         puntuation: {
-            view: '/puntuacion' 
+            view: '/puntuacion',
         }
     }
 }

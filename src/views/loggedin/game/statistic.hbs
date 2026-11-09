@@ -1,0 +1,158 @@
+<section class="live-game stats-game">
+
+    <!-- Encabezado -->
+    <header class="live-header">
+        <div>
+            <span class="live-eyebrow">LOS NÚMEROS DEL DIAMANTE</span>
+            <h1>Así se vivió el partido.</h1>
+            <p>Consulta los resultados y las estadísticas de cada jugador.</p>
+        </div>
+
+        <div class="live-header-actions">
+            <span class="stats-finished-badge">
+                <i class="bi bi-flag-fill" aria-hidden="true"></i>
+                PARTIDO FINALIZADO
+            </span>
+        </div>
+    </header>
+
+    <!-- Franja deportiva -->
+    <div class="live-banner stats-banner">
+        <div>
+            <span class="live-banner-label">CADA JUGADA DEJÓ SU HUELLA</span>
+            <h2>El juego terminó. Sus números cuentan la historia.</h2>
+        </div>
+
+        <i class="bi bi-bar-chart-line-fill" aria-hidden="true"></i>
+    </div>
+
+    <!-- Estadísticas -->
+    <section class="live-panel" aria-labelledby="statsTableTitle">
+        <div class="live-panel-heading">
+            <div>
+                <h2 id="statsTableTitle">Estadísticas del partido</h2>
+                <p>Resultados individuales de los participantes.</p>
+            </div>
+
+            <span class="live-table-hint">
+                <i class="bi bi-pencil-square" aria-hidden="true"></i>
+                Consulta o corrige los registros
+            </span>
+        </div>
+
+        <div class="live-table-scroll" role="region" aria-label="Estadísticas de jugadores del partido finalizado" tabindex="0">
+            <table class="live-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Jugador</th>
+                        <th scope="col">Posición</th>
+                        <th scope="col">Turnos al bate</th>
+                        <th scope="col">Hits</th>
+                        <th scope="col">Jonrón</th>
+                        <th scope="col">Puntos</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody id="statsPlayersContainer">
+                     
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</section>
+
+<!-- Modal para editar estadísticas -->
+<div class="modal fade player-modal stats-modal" id="editStatsModal" tabindex="-1" aria-labelledby="editStatsModalLabel" aria-describedby="editStatsModalDescription" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <!-- Encabezado -->
+            <div class="modal-header">
+                <div class="player-modal-heading">
+                    <div class="player-modal-icon" aria-hidden="true">
+                        <i class="bi bi-pencil-square"></i>
+                    </div>
+
+                    <div>
+                        <h2 class="modal-title" id="editStatsModalLabel">Editar estadísticas</h2>
+                        <p id="editStatsModalDescription">Actualiza los totales del jugador en este partido.</p>
+                    </div>
+                </div>
+
+                <button type="button" class="player-modal-close" data-bs-dismiss="modal" aria-label="Cerrar formulario">
+                    <i class="bi bi-x-lg" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <!-- Formulario: incluye cuerpo y acciones -->
+            <form id="editStatsForm" class="stats-modal-form">
+                <div class="modal-body">
+                    <input type="hidden" id="statsPuntuationId" name="puntuationId">
+                    <input type="hidden" id="statsGameId" name="gameId">
+
+                    <div class="score-player-summary">
+                        <span>JUGADOR</span>
+                        <strong id="statsPlayerName">Selecciona un jugador</strong>
+                    </div>
+
+                    <p class="stats-form-note">
+                        Ingresa los totales finales, no la cantidad que deseas sumar.
+                    </p>
+
+                    <!-- Hits -->
+                    <div class="player-field">
+                        <label for="statsHits">
+                            Hits <span class="player-required" aria-hidden="true">*</span>
+                        </label>
+
+                        <div class="player-input-wrap">
+                            <i class="bi bi-bullseye" aria-hidden="true"></i>
+                            <input type="number" id="statsHits" name="hits" min="0" step="1" placeholder="0" inputmode="numeric" required>
+                        </div>
+                    </div>
+
+                    <!-- Jonrones -->
+                    <div class="player-field">
+                        <label for="statsHomeRuns">
+                            Jonrones <span class="player-required" aria-hidden="true">*</span>
+                        </label>
+
+                        <div class="player-input-wrap">
+                            <i class="bi bi-rocket-takeoff" aria-hidden="true"></i>
+                            <input type="number" id="statsHomeRuns" name="jonron" min="0" step="1" placeholder="0" inputmode="numeric" required>
+                        </div>
+                    </div>
+
+                    <!-- Turnos -->
+                    <div class="player-field">
+                        <label for="statsTurns">
+                            Turnos al bate <span class="player-required" aria-hidden="true">*</span>
+                        </label>
+
+                        <div class="player-input-wrap">
+                            <i class="bi bi-arrow-repeat" aria-hidden="true"></i>
+                            <input type="number" id="statsTurns" name="turno" min="0" step="1" placeholder="0" inputmode="numeric" required>
+                        </div>
+                    </div>
+
+                    <div class="player-form-error" id="editStatsError" role="alert" hidden></div>
+                </div>
+
+                <!-- Botones dentro del formulario -->
+                <div class="modal-footer">
+                    <button type="button" class="player-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
+
+                    <button type="submit" class="player-modal-save" id="btnSaveStats">
+                        <i class="bi bi-check2" aria-hidden="true"></i>
+                        <span>Guardar cambios</span>
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script src="/js/toggedin/puntuation/statistic.js" type="module"></script>

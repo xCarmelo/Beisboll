@@ -4,7 +4,6 @@ const gamesContainer = document.querySelector('#gamesContainer'),
     printGames = async (val)=>{
         const gamesData = val || (await game.all());
         gamesContainer.innerHTML = '';
-        console.log(gamesData);
 
         gamesData.forEach(e => {
             const dateObj = new Date(e.startDate);
@@ -35,19 +34,60 @@ const gamesContainer = document.querySelector('#gamesContainer'),
                     <span class="games-points">${e.player.points.$numberDecimal}</span>
                 </td>
                 <td class="games-text-end">
-                    <button type="button" class="games-icon-button" data-action="view-stats" data-game-id="example-1" aria-label="Ver estadísticas del partido del 2 de noviembre de 2026" title="Ver estadísticas">
-                        <i class="bi bi-bar-chart-line" aria-hidden="true"></i>
-                    </button>
+                    <div class="games-row-actions">
+                        <button type="button" class="games-icon-button btnPuntuation" data-action="view-stats" data-game-id="${e._id}" aria-label="Ver estadísticas del partido" title="Ver estadísticas">
+                            <i class="bi bi-bar-chart-line" aria-hidden="true"></i>
+                        </button>
+
+                        <button type="button" class="games-icon-button games-delete-button btnDeleteGame" data-action="delete-game" data-game-id="${e._id}" aria-label="Eliminar partido" title="Eliminar partido">
+                            <i class="bi bi-trash3" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </td>
             </tr>
             `;
         });
 
-        clickBtnNewGame();
+
+        action();
+
     },
 
     action = ()=>{
+        gamesContainer.addEventListener('click', async(e)=>{
+                    const btnPuntuation = e.target.closest('[data-action="view-stats"]');
+                    const btnDelete = e.target.closest('[data-action="delete-game"]');
 
+                    if(!btnPuntuation && !btnDelete)return;
+
+                    if(btnPuntuation){
+                        const id = btnPuntuation.getAttribute('data-game-id');
+
+                            if(!id){
+                                alert('Partido no encontrado.');
+                                return;
+                            }
+
+                            window.location.href = `/partidos/estadisticas/${id}`;
+                    }
+
+                    if(btnDelete){
+                        const id = btnDelete.getAttribute('data-game-id');
+
+                        if(!id){
+                            alert('Partido no seleccionado.');
+                            return;
+                        }
+
+                        if(confirm('¿Seguro que deseas eliminar este partido?')){
+                            game.deleteGame(id);
+                        }else return;
+                        
+                        
+                    }
+
+                    
+        });
     },
 
     gamePlayersContainer = document.querySelector('#gamePlayersContainer'),
@@ -142,3 +182,4 @@ clickBtnNewGame();
 initGame();
 
 player.listener(printPlayers);
+game.listener(printGames);

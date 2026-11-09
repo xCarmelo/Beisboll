@@ -60,6 +60,24 @@ const _update = {
                     socket.emit("server:puntuationUpdate", false);
                 }
             });
+        },
+
+        updateStatistc: async (io, socket)=>{
+            socket.on('client:statisticUpdate', async data =>{
+                try {
+                    const {_id, ...data} = data;
+
+                    data.points = (data.hits + data.jonron) / data.turno;
+                    data.points = mongoose.Types.Decimal128.fromString(data.points.toFixed(3));
+
+                    await Puntuation.findOneAndUpdate({_id: _id}, {$set: data});
+
+                    io.on('server:puntuationUpdate', true);
+                } catch (error) {
+                    console.log("Error U P:", error);
+                    socket.emit("server:statisticUpdate", false);
+                }
+            });
         }
     },
 

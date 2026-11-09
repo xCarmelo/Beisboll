@@ -19,11 +19,10 @@ const _read = {
             find: async (socket)=>{
                 socket.on('client:allGames', async ()=>{
                     try {
-                        const data = await Game.find().lean();
+                        const data = await Game.find({status: false}).sort({startDate: -1}).lean();
 
                         const puntuation = await Promise.all(data.map( async(g) =>{
                             g.player = await Puntuation.findOne({gameId: g._id})
-                                                .sort({points: -1})
                                                 .populate('playerId', 'name position').lean();
                             return g;
                         }));
@@ -43,6 +42,7 @@ const _read = {
 
                         const puntuations = await Puntuation.find({gameId: gameOnline._id})
                         .populate('playerId', 'name position')
+                        .sort({points: -1})
                         .lean();
 
                         socket.emit("server:gameOnline", {gameOnline, puntuations});
@@ -63,9 +63,13 @@ const _read = {
                     try {
                         const puntuation = await Puntuation.find({gameId: gameId})
                                             .populate("playerId", 'name position')
-                                            .populate("gameId", "startDate, status");
+                                            .populate("gameId", "startDate, status")
+                                            .sort({points: -1});
+
+                        socket.emit('server:puntuation', puntuation);
                     } catch (error) {
-                        
+                        console.log('Error al cargar el partido en curso: ', error);
+                        socket.emit('server:puntuation', []);
                     }
                 });
             }
