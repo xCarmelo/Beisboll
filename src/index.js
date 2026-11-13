@@ -14,7 +14,11 @@ console.log('Server on http//localhost: ' , PORT);
 
 const io = new webSocketServer(httpServer, {
     cors: {
-        origin: "http://localhost:3000"
+        origin: [
+            "http://localhost:3000", 
+            "https://losbombarderos-del-1ro-de-mayo-b74774f63bed.herokuapp.com"
+        ],
+        methods: ["GET", "POST"]
     }
 });
 
