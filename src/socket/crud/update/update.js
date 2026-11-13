@@ -63,19 +63,25 @@ const _update = {
         },
 
         updateStatistc: async (io, socket)=>{
-            socket.on('client:statisticUpdate', async data =>{
+            socket.on('client:statisticUpdate', async (v, callback) =>{
                 try {
-                    const {_id, ...data} = data;
+                    const {_id, ...data} = v;
 
                     data.points = (data.hits + data.jonron) / data.turno;
                     data.points = mongoose.Types.Decimal128.fromString(data.points.toFixed(3));
 
-                    await Puntuation.findOneAndUpdate({_id: _id}, {$set: data});
+                    const result = await Puntuation.findOneAndUpdate({_id: _id}, {$set: data});
 
-                    io.on('server:puntuationUpdate', true);
+                    if(!result){
+                        return callback(false);
+                    }
+
+                    callback(true);
+
+                    socket.brodcast.emit('server:puntuationUpdate', true);
                 } catch (error) {
                     console.log("Error U P:", error);
-                    socket.emit("server:statisticUpdate", false);
+                    callback(false);
                 }
             });
         }
@@ -94,13 +100,14 @@ const _update = {
 
                     if(result.matchedCount === 0){
                         socket.emit('server:endGame', false);
+                        return;
                     }
 
-                    io.emit('server:endGame', true);
+                    io.emit('server:endGame', {result: true, gameId: gameId});
 
                 } catch (error) {
                     console.error('Error al finalizar el partido: ', error);
-                    socket.emit('server:endGame', false);
+                    socket.emit('server:endGame', {result: false});
                 }
             });
         }

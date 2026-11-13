@@ -115,13 +115,15 @@ endGame = ()=>{
             }
         }
     });
-};
+}
 
-
+game.listenerEndGame((v)=>{
+    window.location.href = `/partidos/estadisticas/${v.gameId}`;
+});
 
 addPuntuation();
 printPuntuation();
 endGame();
 puntuation.listener(printPuntuation);
-game.listener();
+
 

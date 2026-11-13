@@ -1,17 +1,20 @@
 import {player, game, puntuation} from './../../socket/socket.js';
 
 const gamesContainer = document.querySelector('#gamesContainer'),
-    printGames = async (val)=>{
-        const gamesData = val || (await game.all());
+    printGames = async ()=>{
+        const gamesData = await game.all();
         gamesContainer.innerHTML = '';
+        let gameOnline = false;
+
 
         gamesData.forEach(e => {
             const dateObj = new Date(e.startDate);
-            const humanReadable = dateObj.toLocaleDateString('es-ES', {
+            if(!e.status){
+                const humanReadable = dateObj.toLocaleDateString('es-ES', {
                 day: '2-digit',
                 month: '2-digit',
                 year: 'numeric',
-                hour: '2-digit',
+                hour: '2-digit', 
                 minute: '2-digit'
             });
 
@@ -46,6 +49,12 @@ const gamesContainer = document.querySelector('#gamesContainer'),
                 </td>
             </tr>
             `;
+            }
+            else{
+                gameOnline = true;
+            }
+
+            if(!gameOnline) document.getElementById("btnNewGame").classList.remove('hidden');
         });
 
 
@@ -161,7 +170,7 @@ const gamesContainer = document.querySelector('#gamesContainer'),
             }
 
             puntuation.create({players: selectedPlayers});
-                puntuation.listener((v)=>{
+                puntuation.listenerCreateGame((v)=>{
                     if(v){
                         alert('Partido creado con éxito.');
                         window.location.href = '/puntuacion';
@@ -183,3 +192,22 @@ initGame();
 
 player.listener(printPlayers);
 game.listener(printGames);
+game.listenerEndGame(printGames);
+puntuation.listenerCreateGame(()=>{
+    document.getElementById("btnNewGame").classList.add('hidden');
+    const modalElement = document.getElementById('createGameModal');
+
+    if (modalElement) {
+        // Quitar el foco antes de ocultarlo para evitar el aviso de aria-hidden.
+        const activeElement = document.activeElement;
+
+        if (activeElement instanceof HTMLElement && modalElement.contains(activeElement)) {
+            activeElement.blur();
+        }
+
+        bootstrap.Modal.getOrCreateInstance(modalElement).hide();
+    }
+
+
+});
+

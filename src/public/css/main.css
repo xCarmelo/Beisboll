@@ -301,6 +301,10 @@ button:focus-visible {
     align-content: center;
 }
 
+.hidden{
+    display: none !important;
+}
+
 .sport-card {
     position: relative;
     isolation: isolate;

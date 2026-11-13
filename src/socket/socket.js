@@ -15,6 +15,9 @@ export default (io)=>{
         //Lectura de la partida en curso
         _read.game.gameOnline(socket);
 
+        //verifica si existe un partido en curso
+        _read.game.hasGameOnline(socket);
+
         //visualizar estadisticas
         _read.puntuation.find(socket);
 

@@ -42,12 +42,12 @@ const _delete = {
                     //si todo sale bien, confirmamos el (commit)
                     await session.commitTransaction();
 
-                    io.emit('server:deleteGame', true);
+                    io.emit('server:deleteGame', {result: true, gameId: id});
 
 
                 } catch (error) {
                     session.abortTransaction();
-                    socket.emit('server:deleteGame', false);
+                    socket.emit('server:deleteGame', {result: false});
                     console.log('Error D G');
                 }
                 finally{

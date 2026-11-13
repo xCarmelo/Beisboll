@@ -1,4 +1,4 @@
-import {puntuation} from '../../socket/socket.js';
+import {puntuation, game} from '../../socket/socket.js';
 
 const playerContaner = document.querySelector("#statsPlayersContainer"),
         printPlayerPuntuation = async (val)=>{
@@ -9,7 +9,7 @@ const playerContaner = document.querySelector("#statsPlayersContainer"),
 
             if(!gameId){
                 alert('Estadística no encontrada');
-                return;
+                return; 
             }
 
             const data = val || (await puntuation.find(gameId));
@@ -84,7 +84,7 @@ const playerContaner = document.querySelector("#statsPlayersContainer"),
                     '#statsPuntuationId',
                     '#statsHits',
                     'statsTurns',
-                    'statsHomeRuns'
+                    'statsHomeRuns' 
                 ];
 
                 const form = document.getElementById('editStatsForm');
@@ -100,17 +100,28 @@ const playerContaner = document.querySelector("#statsPlayersContainer"),
                     }
 
                     const dataEdit = {
-                        '_id': document.getElementById('statsPuntuationId'),
-                        'turno': document.getElementById('statsTurns'),
-                        'hits': document.getElementById('statsHits'),
-                        'jonron': document.getElementById('statsHomeRuns')
+                        '_id': document.getElementById('statsPuntuationId').value,
+                        'turno': document.getElementById('statsTurns').value,
+                        'hits': document.getElementById('statsHits').value,
+                        'jonron': document.getElementById('statsHomeRuns').value
                     }
 
                     puntuation.updateStatistc(dataEdit); 
-
+                    
                 });
         };
 
 printPlayerPuntuation();
 
 puntuation.listener(printPlayerPuntuation);
+game.listener((v, id)=>{
+    if(v){
+
+        const path = window.location.pathname;
+        const partes = path.split('/').filter(Boolean);
+        const gameId = partes[partes.length -1];
+
+        if(gameId === id)
+        window.location.href = "/partidos";
+    }
+});
